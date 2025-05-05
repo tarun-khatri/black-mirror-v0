@@ -1,11 +1,12 @@
 import express from 'express';
 import CacheService from '../services/cache.service';
+import { Request, Response } from 'express';
 
 const router = express.Router();
 const cacheService = CacheService.getInstance();
 
 // Get all companies
-router.get('/companies', async (req, res) => {
+router.get('/companies', async (req: Request, res: Response) => {
     try {
         const companies = await cacheService.mongoDBService.find('companies', {});
         res.json(companies);
@@ -15,7 +16,7 @@ router.get('/companies', async (req, res) => {
 });
 
 // Add a new company
-router.post('/companies', async (req, res) => {
+router.post('/companies', async (req: Request, res: Response) => {
     try {
         const company = req.body;
         await cacheService.mongoDBService.insertOne('companies', {
@@ -29,7 +30,7 @@ router.post('/companies', async (req, res) => {
 });
 
 // Get all social media data for a company
-router.get('/company/:companyName', async (req, res) => {
+router.get('/company/:companyName', async (req: Request, res: Response) => {
     try {
         const { companyName } = req.params;
         const data = await cacheService.getCompanyData(companyName);
@@ -40,7 +41,7 @@ router.get('/company/:companyName', async (req, res) => {
 });
 
 // Get cached data for a specific social media platform
-router.get('/:companyName/:platform/:identifier', async (req, res) => {
+router.get('/:companyName/:platform/:identifier', async (req: Request, res: Response) => {
     try {
         const { companyName, platform, identifier } = req.params;
         const data = await cacheService.getCachedData(companyName, platform, identifier);
@@ -51,7 +52,7 @@ router.get('/:companyName/:platform/:identifier', async (req, res) => {
 });
 
 // Refresh cached data for a specific social media platform
-router.post('/:companyName/:platform/:identifier/refresh', async (req, res) => {
+router.post('/:companyName/:platform/:identifier/refresh', async (req: Request, res: Response) => {
     try {
         const { companyName, platform, identifier } = req.params;
         const { fetchUrl } = req.body;
@@ -70,7 +71,7 @@ router.post('/:companyName/:platform/:identifier/refresh', async (req, res) => {
 });
 
 // Update cache and start refresh interval
-router.post('/:companyName/:platform/:identifier', async (req, res) => {
+router.post('/:companyName/:platform/:identifier', async (req: Request, res: Response) => {
   try {
     const { companyName, platform, identifier } = req.params;
     const { data, fetchFunction } = req.body;
@@ -91,7 +92,7 @@ router.post('/:companyName/:platform/:identifier', async (req, res) => {
 });
 
 // Stop refresh interval
-router.delete('/:companyName/:platform/:identifier', async (req, res) => {
+router.delete('/:companyName/:platform/:identifier', async (req: Request, res: Response) => {
   try {
     const { companyName, platform, identifier } = req.params;
     cacheService.clearRefreshInterval(companyName, platform, identifier);

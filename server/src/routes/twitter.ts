@@ -1,10 +1,12 @@
 import express from 'express';
 import { fetchTwitterData } from '../api/socialMedia';
-import MongoDBService from '../services/mongodb';
+import MongoDBService from '../services/mongodb.service';
+import { Request, Response } from 'express';
+
 
 const router = express.Router();
 
-router.get('/metrics/:companyName/:identifier', async (req, res) => {
+router.get('/metrics/:companyName/:identifier', async (req: Request, res: Response) => {
   try {
     const { companyName, identifier } = req.params;
     const forceRefresh = req.query.forceRefresh === 'true';
@@ -37,7 +39,7 @@ router.get('/metrics/:companyName/:identifier', async (req, res) => {
   }
 });
 
-router.get('/history/:identifier', async (req, res) => {
+router.get('/history/:identifier', async (req: Request, res: Response) => {
   try {
     const { identifier } = req.params;
     const mongoService = MongoDBService.getInstance();

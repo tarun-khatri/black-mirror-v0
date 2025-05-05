@@ -5,6 +5,7 @@ import socialMediaRouter from './routes/socialMedia';
 import cacheRouter from './routes/cache';
 import directRouter from './api/direct';
 import { connectToDatabase, closeDatabaseConnection } from './config/database';
+import { Request, Response } from 'express';
 
 // Load environment variables
 dotenv.config();
@@ -60,7 +61,7 @@ app.use('/api/cache', cacheRouter);
 app.use('/api/direct', directRouter);
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (req: Request, res: Response) => {
   res.json({ 
     status: 'ok',
     environment: process.env.NODE_ENV,

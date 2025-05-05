@@ -9,12 +9,13 @@ import {
 } from '../api/socialMedia';
 
 const router = express.Router();
+import { Request, Response } from 'express';
 
 // Define valid platforms as a constant array
 const VALID_PLATFORMS = ['linkedin', 'twitter', 'telegram', 'medium', 'onchain'] as const;
 
 // Generic endpoint for fetching social media data
-router.get('/:platform/:identifier', async (req, res) => {
+router.get('/:platform/:identifier', async (req: Request, res: Response) => {
   try {
     const { platform, identifier } = req.params;
     const { companyName } = req.query;

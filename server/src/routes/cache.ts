@@ -4,12 +4,12 @@ import { fetchLinkedInData, fetchTwitterData, fetchTelegramData, fetchMediumData
 import MongoDBService from '../services/mongodb.service';
 import { OnchainMetrics } from '../types';
 import { ObjectId } from 'mongodb';
-
+import { Request, Response } from 'express';
 const router = express.Router();
 const mongoService = MongoDBService.getInstance();
 
 // Get all companies
-router.get('/companies', async (req, res) => {
+router.get('/companies', async (req: Request, res: Response) => {
     try {
         const companies = await mongoService.find('companies', {});
         res.json(companies);
@@ -19,7 +19,7 @@ router.get('/companies', async (req, res) => {
 });
 
 // Add a new company
-router.post('/companies', async (req, res) => {
+router.post('/companies', async (req: Request, res: Response) => {
     try {
         const company = req.body;
         await mongoService.insertOne('companies', {
@@ -33,7 +33,7 @@ router.post('/companies', async (req, res) => {
 });
 
 // Update a company
-router.put('/companies/:id', async (req, res) => {
+router.put('/companies/:id', async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const company = req.body;
@@ -68,7 +68,7 @@ router.put('/companies/:id', async (req, res) => {
 });
 
 // Get cached data
-router.get('/:companyName/:platform/:identifier', async (req, res) => {
+router.get('/:companyName/:platform/:identifier', async (req: Request, res: Response) => {
   try {
     const { companyName, platform, identifier } = req.params;
     
@@ -149,7 +149,7 @@ router.get('/:companyName/:platform/:identifier', async (req, res) => {
 });
 
 // Refresh cache
-router.post('/:companyName/:platform/:identifier/refresh', async (req, res) => {
+router.post('/:companyName/:platform/:identifier/refresh', async (req: Request, res: Response) => {
   try {
     const { companyName, platform, identifier } = req.params;
     const { force = false } = req.body;
@@ -214,7 +214,7 @@ router.post('/:companyName/:platform/:identifier/refresh', async (req, res) => {
   }
 });
 
-router.post('/refresh', async (req, res) => {
+router.post('/refresh', async (req: Request, res: Response) => {
   const { companyId, platform } = req.body;
   
   if (!companyId || !platform) {
@@ -267,7 +267,7 @@ router.post('/refresh', async (req, res) => {
 });
 
 // Get cached onchain metrics
-router.get('/onchain/:companyId', async (req, res) => {
+router.get('/onchain/:companyId', async (req: Request, res: Response) => {
   try {
     const { companyId } = req.params;
     
@@ -294,7 +294,7 @@ router.get('/onchain/:companyId', async (req, res) => {
 });
 
 // Refresh onchain metrics
-router.post('/:companyName/onchain/:identifier/refresh', async (req, res) => {
+router.post('/:companyName/onchain/:identifier/refresh', async (req: Request, res: Response) => {
   try {
     const { companyName, identifier } = req.params;
     console.log(`Refreshing onchain metrics for ${companyName} with identifier ${identifier}`);
@@ -318,7 +318,7 @@ router.post('/:companyName/onchain/:identifier/refresh', async (req, res) => {
 });
 
 // Get cached onchain data for a specific company
-router.get('/onchain/:companyName/:identifier', async (req, res) => {
+router.get('/onchain/:companyName/:identifier', async (req: Request, res: Response) => {
   try {
     const { companyName, identifier } = req.params;
     const cacheKey = `onchain:${identifier}`;
@@ -363,7 +363,7 @@ router.get('/onchain/:companyName/:identifier', async (req, res) => {
   }
 });
 
-router.get('/:companyName/onchain/:identifier', async (req, res) => {
+router.get('/:companyName/onchain/:identifier', async (req: Request, res: Response) => {
   try {
     const { companyName, identifier } = req.params;
     const forceRefresh = req.query.forceRefresh === 'true';
@@ -390,7 +390,7 @@ router.get('/:companyName/onchain/:identifier', async (req, res) => {
 });
 
 // Get cached LinkedIn data
-router.get('/:companyName/linkedin/:identifier', async (req, res) => {
+router.get('/:companyName/linkedin/:identifier', async (req: Request, res: Response) => {
   try {
     const { companyName, identifier } = req.params;
     const cacheKey = `${companyName}:linkedin:${identifier}`;

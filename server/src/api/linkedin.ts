@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { Request, Response } from 'express';
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ const LINKEDIN_API_KEY = process.env.LINKEDIN_API_KEY;
 const LINKEDIN_API_URL = 'https://api.linkedin.com/v2';
 
 // Fetch company data from LinkedIn
-router.get('/:identifier/:companyName', async (req, res) => {
+router.get('/:identifier/:companyName', async (req: Request, res: Response) => {
     try {
         const { identifier, companyName } = req.params;
         

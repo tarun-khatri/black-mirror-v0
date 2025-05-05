@@ -1,11 +1,12 @@
 import express from 'express';
 import { fetchOnchainData } from './socialMedia';
 import { OnchainMetrics } from '../types';
+import { Request, Response } from 'express';
 
 const router = express.Router();
 
 // Direct endpoint to fetch onchain metrics without MongoDB lookup
-router.post('/onchain/:identifier', async (req, res) => {
+router.post('/onchain/:identifier', async (req: Request, res: Response) => {
   try {
     const { identifier } = req.params;
     const { companyName = 'Unknown Company' } = req.body;
