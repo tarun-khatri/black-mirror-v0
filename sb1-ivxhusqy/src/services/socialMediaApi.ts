@@ -31,7 +31,7 @@ export async function fetchSocialMediaData(
   }
 
   try {
-    const response = await axios.get(`${apiConfig.endpoints.socialMedia}/social-media/${platform.toLowerCase()}/${identifier}`, {
+    const response = await axios.get(`${apiConfig.endpoints.socialMedia}/${platform.toLowerCase()}/${identifier}`, {
       params: { companyName }
     });
 
@@ -58,7 +58,7 @@ export async function fetchSocialMediaDataWithCache(
   forceRefresh = false
 ): Promise<SocialMediaData | null> {
   try {
-    const response = await axios.get(`${apiConfig.endpoints.socialMedia}/social-media/${platform.toLowerCase()}/${identifier}`, {
+    const response = await axios.get(`${apiConfig.endpoints.socialMedia}/${platform.toLowerCase()}/${identifier}`, {
       params: { 
         companyName,
         force: forceRefresh
