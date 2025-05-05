@@ -16,6 +16,7 @@ import {
   Filler
 } from 'chart.js';
 import type { OnchainMetrics, SocialMediaData } from '../../../types/index';
+import apiConfig from '../../../api/api';
 
 // Format helper for compact numbers
 const formatCompactNumber = (value: number) => {
@@ -86,7 +87,7 @@ const OnchainMetrics: React.FC<OnchainMetricsProps> = ({
       setError(null);
       
       // First try to get data from cache
-      fetch(`/api/cache/${companyName}/onchain/${identifiers.defillama}`)
+      fetch(`${apiConfig.endpoints.cache}/${companyName}/onchain/${identifiers.defillama}`)
         .then(async (res) => {
           const result = await res.json();
           if (res.ok && result.success) {
@@ -112,7 +113,7 @@ const OnchainMetrics: React.FC<OnchainMetricsProps> = ({
     if (!identifiers.defillama || !companyName) return;
     setRefreshing(true);
     setError(null);
-    fetch(`/api/social-media/onchain/${identifiers.defillama}?companyName=${encodeURIComponent(companyName)}&force=true`)
+    fetch(`${apiConfig.endpoints.socialMedia}/onchain/${identifiers.defillama}?companyName=${encodeURIComponent(companyName)}&force=true`)
       .then(async (res) => {
         const result = await res.json();
         if (!res.ok || !result.success) throw new Error(result.error || 'Failed to fetch onchain data');

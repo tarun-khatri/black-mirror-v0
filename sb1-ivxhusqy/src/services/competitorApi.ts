@@ -99,7 +99,7 @@ export const fetchOnchainData = async (company: Company) => {
       throw new Error('No DeFi Llama identifier found for this company');
     }
 
-    const response = await fetch(`/api/cache/${company.name}/onchain/${company.identifiers.defillama}`);
+    const response = await fetch(`${apiConfig.endpoints.cache}/${company.name}/onchain/${company.identifiers.defillama}`);
     if (!response.ok) {
       throw new Error('Failed to fetch onchain data');
     }

@@ -1,3 +1,4 @@
+import apiConfig from '../api/api';
 // import CacheService from '../../server/src/services/cache.service';
 
 // Generic function to fetch social media data with cache
@@ -10,7 +11,7 @@ export async function fetchSocialMediaDataWithCache(
     console.log(`Attempting to fetch ${platform} data for ${identifier} (${companyName})`);
     
     // Try to get cached data first
-    const cacheResponse = await fetch(`/api/cache/${companyName}/${platform}/${identifier}`);
+    const cacheResponse = await fetch(`${apiConfig.endpoints.cache}/${companyName}/${platform}/${identifier}`);
     if (cacheResponse.ok) {
       const cachedData = await cacheResponse.json();
       if (cachedData) {
@@ -22,7 +23,7 @@ export async function fetchSocialMediaDataWithCache(
     console.log(`Cache miss for ${platform} data, refreshing...`);
     
     // If no cached data, fetch from API and cache it
-    const refreshResponse = await fetch(`/api/cache/${companyName}/${platform}/${identifier}/refresh`, {
+    const refreshResponse = await fetch(`${apiConfig.endpoints.cache}/${companyName}/${platform}/${identifier}/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +74,7 @@ export async function fetchMediumDataWithCache(identifier: string, companyName: 
 // Get all social media data for a company
 export async function fetchCompanyData(companyName: string) {
   try {
-    const response = await fetch(`/api/cache/company/${companyName}`);
+    const response = await fetch(`${apiConfig.endpoints.cache}/companies/${companyName}`);
     if (!response.ok) {
       throw new Error('Failed to fetch company data');
     }

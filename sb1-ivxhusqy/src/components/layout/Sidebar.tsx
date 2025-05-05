@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { Company } from '../../types/index';
 import { AddCompanyDialog } from '../company/AddCompanyDialog';
+import apiConfig from '../../api/api';
 
 interface SidebarProps {
   mobileOpen: boolean;
@@ -58,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await fetch('/api/cache/companies');
+        const response = await fetch(`${apiConfig.endpoints.cache}/companies`);
         if (!response.ok) {
           throw new Error('Failed to fetch companies');
         }
@@ -78,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const handleAddCompany = async (newCompany: Omit<Company, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
       // Save to backend
-      const response = await fetch('/api/cache/companies', {
+      const response = await fetch(`${apiConfig.endpoints.cache}/companies`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +105,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     try {
       console.log('Updating company with data:', updatedCompany);
       // Update in backend using _id instead of id
-      const response = await fetch(`/api/cache/companies/${updatedCompany._id}`, {
+      const response = await fetch(`${apiConfig.endpoints.cache}/companies/${updatedCompany._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

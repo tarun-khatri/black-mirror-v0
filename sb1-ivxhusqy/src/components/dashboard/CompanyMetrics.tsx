@@ -10,6 +10,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { LinkedInMetrics } from './platforms/LinkedInMetrics';
+import apiConfig from '../../api/api';
 
 interface CompanyMetricsProps {
   company: Company;
@@ -46,7 +47,7 @@ export const CompanyMetrics: React.FC<CompanyMetricsProps> = ({ company }) => {
         let onchainData = null;
         if (company.identifiers?.defillama) {
           try {
-            const onchainResponse = await fetch(`/api/cache/${company.name}/onchain/${company.identifiers.defillama}`);
+            const onchainResponse = await fetch(`${apiConfig.endpoints.cache}/${company.name}/onchain/${company.identifiers.defillama}`);
             if (!onchainResponse.ok) {
               throw new Error('Failed to fetch onchain data');
             }
@@ -114,7 +115,7 @@ export const CompanyMetrics: React.FC<CompanyMetricsProps> = ({ company }) => {
       setRefreshingOnchain(true);
       
       // Call the refresh endpoint with force refresh
-      const response = await fetch(`/api/cache/${company.name}/onchain/${company.identifiers.defillama}/refresh`, {
+      const response = await fetch(`${apiConfig.endpoints.cache}/${company.name}/onchain/${company.identifiers.defillama}/refresh`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

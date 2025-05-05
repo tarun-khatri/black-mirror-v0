@@ -17,6 +17,7 @@ import { useThemeContext } from '../../theme/ThemeProvider';
 import Tooltip from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import CircularProgress from '@mui/material/CircularProgress';
+import apiConfig from '../../api/api';
 
 interface HeaderProps {
   mobileOpen: boolean;
@@ -35,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ mobileOpen, handleDrawerToggle, onSearc
 
   useEffect(() => {
     setLoading(true);
-    fetch('/api/cache/companies')
+    fetch(`${apiConfig.endpoints.cache}/companies`)
       .then(res => res.json())
       .then(data => setCompanies(data))
       .catch(() => setCompanies([]))

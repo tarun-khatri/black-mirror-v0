@@ -35,6 +35,7 @@ import { LinkedInMetrics } from './platforms/LinkedInMetrics';
 import { MediumMetrics } from './platforms/MediumMetrics';
 import { OnchainMetrics } from './platforms/OnchainMetrics';
 import axios from 'axios';
+import apiConfig from '../../api/api';
 
 // Register Chart.js components
 ChartJS.register(
@@ -86,7 +87,7 @@ export const PlatformDetailDialog: React.FC<PlatformDetailDialogProps> = ({
       setOnchainLoading(true);
       
       // Fetch data from the backend API
-      axios.get(`/api/social-media/onchain/${data.profile.name}?companyName=${data.profile.name}`)
+      axios.get(`${apiConfig.endpoints.socialMedia}/onchain/${data.profile.name}?companyName=${data.profile.name}`)
         .then(response => {
           if (response.data && response.data.success) {
             setOnchainData(response.data.data);
