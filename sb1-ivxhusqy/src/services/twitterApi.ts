@@ -1,5 +1,7 @@
 import { TwitterData, SocialProfile, FollowerStats, ContentAnalysis, Post } from '../types/index';
 import { fetchSocialMediaDataWithCache } from './socialMediaApi';
+import api from './api';
+import apiConfig from '../api/api';
 
 export async function fetchTwitterData(identifier: string, companyName: string): Promise<TwitterData | null> {
   if (!identifier) {
@@ -69,6 +71,15 @@ export async function fetchTwitterData(identifier: string, companyName: string):
   }
 }
 
-export async function fetchTwitterMetrics(companyName: string, identifier: string): Promise<TwitterData | null> {
-  return fetchTwitterData(identifier, companyName);
-}
+export const fetchTwitterMetrics = async (companyName: string, identifier: string) => {
+  try {
+    const response = await api.get(
+      `${apiConfig.endpoints.socialMedia}/twitter/${identifier}?companyName=${companyName}`
+    );
+    // Unwrap the .data property if it exists
+    return response.data.data || response.data;
+  } catch (error) {
+    console.error('Error fetching Twitter metrics:', error);
+    throw error;
+  }
+};

@@ -172,7 +172,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <Divider />
       <List>
         {loading ? (
-          <ListItem>
+          <ListItem key="loading">
             <ListItemText primary="Loading companies..." />
           </ListItem>
         ) : (
@@ -206,12 +206,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                       sx={{ width: 28, height: 28, bgcolor: theme.palette.primary.light, fontSize: '0.8rem' }}
                       imgProps={{ 
                         onError: (e: any) => { 
-                          // If LinkedIn logo fails, try Clearbit
                           if (e.target.src === company.logo) {
                             const formattedName = company.name.toLowerCase().replace(/\s+/g, '-');
                             e.target.src = `https://logo.clearbit.com/${formattedName}.com`;
                           } else {
-                            // If Clearbit fails, fallback to first letter
                             e.target.src = '';
                           }
                         } 
@@ -234,11 +232,13 @@ const Sidebar: React.FC<SidebarProps> = ({
           })
         )}
         
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {
-            setCompanyToEdit(null);
-            setAddCompanyOpen(true);
-          }}>
+        <ListItem key="add-company" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              setCompanyToEdit(null);
+              setAddCompanyOpen(true);
+            }}
+          >
             <ListItemIcon sx={{ minWidth: 40 }}>
               <PlusCircle size={22} color={theme.palette.text.secondary} />
             </ListItemIcon>
@@ -257,7 +257,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       <Divider />
       <List>
-        <ListItem disablePadding>
+        <ListItem key="settings" disablePadding>
           <ListItemButton>
             <ListItemIcon sx={{ minWidth: 40 }}>
               <Settings size={22} color={theme.palette.text.secondary} />

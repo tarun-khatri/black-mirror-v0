@@ -89,30 +89,70 @@ export interface ContentAnalysis {
 // --- Platform Specific Types ---
 
 export interface TwitterData {
+  success: boolean;
+  platform: string;
+  identifier: string;
+  companyName: string;
   profile: {
-    success: boolean;
-    data: {
-      name: string;
-      username: string;
-      description: string;
-      followers: number;
-      following: number;
-      tweets: number;
+    name: string;
+    username: string;
+    displayName: string;
+    bio: string;
+    profileImage: string;
+    postCount: number;
+    followersCount: number;
+    following: number;
+    favorites: number;
+    listedCount: number;
+    isVerified: boolean;
+    isBlueVerified: boolean;
+    joinedDate: string;
+    location: string;
+    website: string;
+  };
+  followerStats: {
+    current: number;
+    totalFollowers: number;
+    oneDayChange: {
+      count: number;
+      percentage: number;
+    };
+    oneWeekChange: {
+      count: number;
+      percentage: number;
     };
   };
-  tweets: {
-    success: boolean;
-    data: {
-      tweets: Post[];
-      totalTweets: number;
+  contentAnalysis: {
+    engagementRate: number;
+    metrics: {
+      avgEngagementRate: number;
+      engagementRatePerPost: number;
+      dailyEngagementRate: number;
+      totalLikes: number;
+      totalShares: number;
+      totalReplies: number;
+      totalFavorites: number;
+      recentTweetsCount: number;
+      listedCount: number;
+      likes24h: number;
+      shares24h: number;
+      replies24h: number;
+      tweetFrequency7d: number;
+      replyFrequency7d: number;
     };
   };
-  followerStats: FollowerStats;
-  contentAnalysis: ContentAnalysis;
+  posts: Array<{
+    id: string;
+    text: string;
+    date: string;
+    likes: number;
+    comments: number;
+    shares: number;
+  }>;
+  summary?: string;
   _source?: 'cache' | 'api';
   _lastUpdated?: string;
-  summary?: string;
-  posts?: any[];
+  expiresAt?: number;
 }
 
 export interface LinkedInPost {

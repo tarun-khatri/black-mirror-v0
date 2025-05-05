@@ -224,16 +224,16 @@ const TwitterMetrics: React.FC<TwitterMetricsProps> = ({ companyName, identifier
                 </Box>
                 <Box>
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                    {profile.data.name}
+                    {data?.profile?.name || 'N/A'}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    @{profile.data.username}
+                    @{data?.profile?.username || 'N/A'}
                   </Typography>
                 </Box>
               </Box>
               
               <Typography variant="body2" color="text.secondary" paragraph>
-                {profile.data.description}
+                {data?.profile?.bio || 'No description available'}
               </Typography>
 
               <Grid container spacing={3} sx={{ mt: 2 }}>
@@ -248,7 +248,7 @@ const TwitterMetrics: React.FC<TwitterMetricsProps> = ({ companyName, identifier
                       Followers
                     </Typography>
                     <Typography variant="h4" sx={{ fontWeight: 700, color: color }}>
-                      {profile?.data?.followers?.toLocaleString() || '0'}
+                      {data?.profile?.followersCount?.toLocaleString() || '0'}
                     </Typography>
                   </Box>
                 </Grid>
@@ -263,7 +263,7 @@ const TwitterMetrics: React.FC<TwitterMetricsProps> = ({ companyName, identifier
                       Following
                     </Typography>
                     <Typography variant="h4" sx={{ fontWeight: 700, color: color }}>
-                      {profile?.data?.following?.toLocaleString() || '0'}
+                      {data?.profile?.following?.toLocaleString() || '0'}
                     </Typography>
                   </Box>
                 </Grid>
@@ -278,7 +278,7 @@ const TwitterMetrics: React.FC<TwitterMetricsProps> = ({ companyName, identifier
                       Tweets
                     </Typography>
                     <Typography variant="h4" sx={{ fontWeight: 700, color: color }}>
-                      {profile?.data?.tweets?.toLocaleString() || '0'}
+                      {data?.profile?.postCount?.toLocaleString() || '0'}
                     </Typography>
                   </Box>
                 </Grid>
@@ -414,8 +414,8 @@ const TwitterMetrics: React.FC<TwitterMetricsProps> = ({ companyName, identifier
                     </Typography>
                     <Tooltip title="Daily engagement = (Replies in last 24h / Followers) * 100." arrow>
                       <Typography variant="h5" sx={{ fontWeight: 700, color: color }}>
-                        {contentAnalysis?.metrics?.replies24h ? 
-                          ((contentAnalysis.metrics.replies24h / profile.data.followers) * 100).toFixed(2) : 
+                        {data?.contentAnalysis?.metrics?.replies24h ? 
+                          ((data.contentAnalysis.metrics.replies24h / data.profile.followersCount) * 100).toFixed(2) : 
                           '0.00'}%
                       </Typography>
                     </Tooltip>
@@ -517,16 +517,16 @@ const TwitterMetrics: React.FC<TwitterMetricsProps> = ({ companyName, identifier
                   }}
                 >
                   <ListItemAvatar>
-                    <Avatar src={(profile as any).data.profileImage} />
+                    <Avatar src={data?.profile?.profileImage} />
                   </ListItemAvatar>
                   <ListItemText
                     primary={
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                          {profile.data.name}
+                          {data?.profile?.name || 'N/A'}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          @{profile.data.username}
+                          @{data?.profile?.username || 'N/A'}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
                           {formatDate(tweet.date)}

@@ -4,8 +4,22 @@ import { fetchTwitterMetrics } from './twitterApi';
 import { fetchLinkedInData } from './linkedInApi';
 import { fetchMediumMetrics } from './mediumApi';
 import { fetchOnchainMetrics } from './onchainApi';
+import api from './api';
+import apiConfig from '../api/api';
 
-export async function fetchAllCompetitorData(company: Company): Promise<CompetitorData> {
+export const fetchAllCompetitorData = async (company: any) => {
+  try {
+    const response = await api.get(
+      `${apiConfig.endpoints.direct}/competitors/${company.name}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching competitor data:', error);
+    throw error;
+  }
+};
+
+export async function fetchAllCompetitorDataOld(company: Company): Promise<CompetitorData> {
   if (!company) {
     console.log('No company provided to fetchAllCompetitorData');
     return { twitter: null, linkedIn: null, medium: null, onchainData: null, cryptoData: null, github: null };

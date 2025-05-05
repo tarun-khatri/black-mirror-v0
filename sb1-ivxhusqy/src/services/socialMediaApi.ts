@@ -1,6 +1,8 @@
 import { SocialProfile, FollowerStats, ContentAnalysis, Post, LinkedInData, TwitterData, MediumData, Company } from '../types/index';
 import axios from 'axios';
 import { fetchSocialMediaDataWithCache as fetchFromCache } from './apiCacheWrapper';
+import api from './api';
+import apiConfig from '../api/api';
 
 const API_BASE_URL = 'http://localhost:3001/api'; // Update with your actual API URL
 
