@@ -6,6 +6,17 @@ dotenv.config();
 
 const router = express.Router();
 
+interface LinkedInCompanyResponse {
+    name: string;
+    description: string;
+    industry: string;
+    website: string;
+    staffCountRange: {
+        start: number;
+        end: number;
+    };
+}
+
 // LinkedIn API configuration
 const LINKEDIN_API_KEY = process.env.LINKEDIN_API_KEY;
 const LINKEDIN_API_URL = 'https://api.linkedin.com/v2';
@@ -30,7 +41,7 @@ router.get('/:identifier/:companyName', async (req: Request, res: Response) => {
             throw new Error(`LinkedIn API error: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const data = await response.json() as LinkedInCompanyResponse;
         
         // Transform the data as needed
         const transformedData = {
@@ -42,17 +53,16 @@ router.get('/:identifier/:companyName', async (req: Request, res: Response) => {
                 industry: data.industry,
                 website: data.website,
                 employeeCount: data.staffCountRange,
-                // Add more fields as needed
             },
             timestamp: Date.now()
         };
 
         res.json(transformedData);
-    } catch (error) {
+    } catch (error: unknown) {
         console.error('Error fetching LinkedIn data:', error);
         res.status(500).json({ 
             error: 'Failed to fetch LinkedIn data',
-            details: error.message 
+            details: error instanceof Error ? error.message : 'Unknown error'
         });
     }
 });

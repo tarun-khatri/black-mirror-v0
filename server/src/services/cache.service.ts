@@ -3,7 +3,7 @@ import { fetchOnchainData } from '../api/socialMedia';
 
 export class CacheService {
     private static instance: CacheService;
-    private mongoDBService: MongoDBService;
+    protected mongoDBService: MongoDBService;
     private refreshIntervals: Map<string, NodeJS.Timeout> = new Map();
     private readonly REFRESH_INTERVAL = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
 
