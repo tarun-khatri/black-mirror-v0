@@ -32,7 +32,8 @@ const port = process.env.PORT || 3001;
 // CORS configuration
 const allowedOrigins = [
   'http://localhost:5173', // Development
-  'https://your-frontend-service-url.onrender.com' // Production
+  'https://black-mirror-v0-1.onrender.com', // Production Frontend
+  'https://black-mirror-v0.onrender.com' // Production Backend
 ];
 
 const corsOptions = {
