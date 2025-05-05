@@ -4,7 +4,7 @@ import { fetchSocialMediaDataWithCache as fetchFromCache } from './apiCacheWrapp
 import api from './api';
 import apiConfig from '../api/api';
 
-const API_BASE_URL = 'http://localhost:3001/api'; // Update with your actual API URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 export type Platform = 'linkedIn' | 'Twitter' | 'Telegram' | 'Medium' | 'Onchain';
 
